@@ -3,8 +3,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-const { token } = require('./config.json');
 
+const BotToken = process.env['token']
 
 
 // Create a new client instance
@@ -90,4 +90,4 @@ client.on(Events.InteractionCreate, async interaction => {
 
 
 // Log in to Discord with your client's token
-client.login(token);
+client.login(BotToken);

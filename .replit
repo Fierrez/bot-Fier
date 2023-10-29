@@ -1,0 +1,13 @@
+modules = ["nodejs-18:v3-20230608-f4cd419"]
+hidden = [".config", "package-lock.json"]
+run = "node Fier.js"
+
+[nix]
+channel = "stable-23_05"
+
+[deployment]
+run = ["sh", "-c", "node Fier.js"]
+deploymentTarget = "cloudrun"
+ignorePorts = false
+
+onBoot = "npm install"
