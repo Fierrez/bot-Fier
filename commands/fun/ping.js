@@ -10,5 +10,3 @@ module.exports = {
 		
 	},
 };
-var numberofping=+1;
-console.log("number of ping",numberofping);

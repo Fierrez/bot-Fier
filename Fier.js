@@ -1,14 +1,21 @@
-// Require the necessary discord.js classes
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, Activity } = require('discord.js');
 const { token } = require('./config.json');
 
-
+let currentstatus;
+let loadTime;
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ 
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+	], 
+});
+
 
 // Creating a new instances command handling
 client.commands = new Collection();
@@ -46,24 +53,6 @@ for (const file of eventFiles) {
 	}
 }
 
-
-
-/* // When the client is ready, run this code (only once)
-    // We use 'c' for the event parameter to keep it separate from the already defined 'client'
-    client.once(Events.ClientReady, c => {
-	console.log(`Starting node...\nLogged in as ${c.user.tag}`);
-    });*/
-
-
-
-
-
-// run this code if client is ready
-client.on(Events.ClientReady, status => {
-    status.user.setStatus('idle');
-});
-
-
 client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
@@ -86,7 +75,82 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 });
 
+let status =[
+	{
+		"details": "details",
+		"state": "wake me up if u need someting ",
+		"name": "Sleeping bot | use !wake up fier",
+		"type": 2,
+		
+	},
+	{
+		"details": "deatils",
+		"state": "Awake",
+		"name": "naem",
+		"type": 4,
+		"url": "https://www.twitch.tv/discord"
+	},
+]
 
+
+
+//Fier born
+client.once(Events.ClientReady, c =>   {
+
+	
+	let currentstatus = 'idle';
+	loadTime = (new Date().getMinutes());
+
+    console.log('Fier is alive but is sleeping');
+
+	client.user.setActivity(status[0]);
+	client.user.setStatus('idle');
+
+
+
+ 
+});
+
+
+
+client.on("messageCreate", async function (message) {
+    if (message.content.substring(0,1,2) === "!") {
+		if(message.content.includes('wake up fier')| message.content.includes('WAKE UP FIER')){
+			client.user.setStatus('online');
+			currentstatus='online';
+
+			if(client.user.presence.status == 'online' ){
+				setTimeout(statustoidle, 300000);
+				console.log('Fier is awake');
+				client.user.setActivity(status[1]);
+			}
+			
+			
+			
+			
+		} 
+		
+		
+    }
+
+	if(client.user.presence.status == 'online' ){
+		if(message.content.includes('nigga')){
+			message.reply('Racist is bad');
+		}
+	}
+	
+});
+
+
+
+
+function statustoidle(){
+	client.user.setStatus('idle');
+	let currentstatus = 'idle';
+	client.user.setActivity(status[0]);
+    console.log('Fier is sleeping');
+	
+}
 
 
 // Log in to Discord with your client's token
