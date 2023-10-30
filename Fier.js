@@ -1,7 +1,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits, Activity } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, Activity,EmbedBuilder } = require('discord.js');
 const { token } = require('./config.json');
 
 let currentstatus;
@@ -13,6 +13,7 @@ const client = new Client({
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
 	], 
 });
 
@@ -115,7 +116,7 @@ client.once(Events.ClientReady, c =>   {
 
 client.on("messageCreate", async function (message) {
     if (message.content.substring(0,1,2) === "!") {
-		if(message.content.includes('wake up fier')| message.content.includes('WAKE UP FIER')){
+		if(message.content.includes('wake up fier')| message.content.includes('WAKE UP FIER')||message.content.includes('/wakeup')){
 			client.user.setStatus('online');
 			currentstatus='online';
 
@@ -139,7 +140,51 @@ client.on("messageCreate", async function (message) {
 		}
 	}
 	
+	if(message.content.includes('welcome')){
+		message.reply(exampleEmbed);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -152,8 +197,4 @@ function statustoidle(){
 	
 }
 
-
-
-
-// Log in to Discord with your client's token
 client.login(token);
