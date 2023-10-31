@@ -190,7 +190,7 @@ const embedd = new EmbedBuilder()
 	.setTitle('Welcome')
 	.setURL('https://discord.js.org/')
 
-	.setAuthor({ name: 'Some name', iconURL: '/assets/space.jpg', url: 'https://discord.js.org' })
+	.setAuthor({ name: 'Fier', iconURL: 'https://github.com/Fierrez/bot-Fier/blob/4e6295e8eabfe0c9cdc000c050a9a0fe9fa438dc/assets/space.jpg', url: 'https://discord.com/api/oauth2/authorize?client_id=1073052260948508692&permissions=8&scope=bot' })
 	.setDescription('Some description here')
 	.setThumbnail('https://i.imgur.com/AfFp7pu.png')
 	.addFields(
