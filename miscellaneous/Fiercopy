@@ -1,6 +1,6 @@
 
-// const fs = require('node:fs');
-// const path = require('node:path');
+const fs = require('node:fs');
+const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, Activity,EmbedBuilder } = require('discord.js');
 const { token } = require('./config.json');
 const { Player } = require('discord-player');
@@ -11,16 +11,16 @@ let currentstatus;
 let loadTime;
 
 // Create a new client instance
-// const client = new Client({ 
-// 	intents: [
-// 		GatewayIntentBits.Guilds,
-// 		GatewayIntentBits.GuildMessages,
-// 		GatewayIntentBits.MessageContent,
-// 		GatewayIntentBits.GuildMembers,
-// 		GatewayIntentBits.GuildVoiceStates
-// 	], 
-// 	disableMentions:'everyone',
-// });
+const client = new Client({ 
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
+		GatewayIntentBits.GuildVoiceStates
+	], 
+	disableMentions:'everyone',
+});
 global.client = new Client({ 
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -41,40 +41,40 @@ player.extractors.loadDefault();
 require('./src/loader');
 
 // Creating a new instances command handling
-// client.commands = new Collection();
-// const foldersPath = path.join(__dirname, 'commands');
+client.commands = new Collection();
+const foldersPath = path.join(__dirname, 'commands');
 
-// // const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-// const commandFolders = fs.readdirSync(foldersPath);
+// const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const commandFolders = fs.readdirSync(foldersPath);
 
-// for (const folder of commandFolders) {
-// 	const commandsPath = path.join(foldersPath, folder);
-// 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-// 	for (const file of commandFiles) {
-// 		const filePath = path.join(commandsPath, file);
-// 		const command = require(filePath);
-// 		// Set a new item in the Collection with the key as the command name and the value as the exported module
-//       if ('data' in command && 'execute' in command) {
-//            client.commands.set(command.data.name, command);
-//         } else {
-//            console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
-//         }
-//     }
-// }
+for (const folder of commandFolders) {
+	const commandsPath = path.join(foldersPath, folder);
+	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+	for (const file of commandFiles) {
+		const filePath = path.join(commandsPath, file);
+		const command = require(filePath);
+		// Set a new item in the Collection with the key as the command name and the value as the exported module
+      if ('data' in command && 'execute' in command) {
+           client.commands.set(command.data.name, command);
+        } else {
+           console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+        }
+    }
+}
 
 
-// const eventsPath = path.join(__dirname, 'events');
-// const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
-// for (const file of eventFiles) {
-// 	const filePath = path.join(eventsPath, file);
-// 	const event = require(filePath);
-// 	if (event.once) {
-// 		client.once(event.name, (...args) => event.execute(...args));
-// 	} else {
-// 		client.on(event.name, (...args) => event.execute(...args));
-// 	}
-// }
+for (const file of eventFiles) {
+	const filePath = path.join(eventsPath, file);
+	const event = require(filePath);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
 
 
 
@@ -95,13 +95,6 @@ let status =[
 		"type": 4,
 		"url": "https://www.twitch.tv/discord"
 	},
-	{
-		"details": "Streaming Stofipy",
-  		"state": "wake me up if u need someting \n !wake up fier ",
-  		"name": "Stofipy",
-  		"type": 1,
-  		
-	}
 ]
 
 
@@ -129,7 +122,7 @@ client.on("messageCreate", async function (message) {
 	if (message.author.bot) return
 
 	
-    if (message.content.substring(0,1,2) === "!" || message.content.substring(0,1,2) === "/" ) {
+    if (message.content.substring(0,1,2) === "!" ) {
 		if(message.content.includes('wake up fier') || message.content.includes('WAKE UP FIER') || message.content.includes('wakeup') || message.content.includes('Fier is awake') ){
 			client.user.setStatus('online');
 			currentstatus='online';
@@ -143,23 +136,12 @@ client.on("messageCreate", async function (message) {
 			
 			
 			
-			
 		} 
 		
 		
     }
 
-
-	if(message.channel.name.includes('music') ){
-
-		client.user.setActivity(status[2]);
-		console.log('Fier is streaming');
-		
-	}
-
-
-
-	if(client.user.presence.status == 'online' || client.user.presence.status == 1){
+	if(client.user.presence.status == 'online' ){
 		if(message.content.includes('nigga')){
 			message.reply('Racist is bad');
 
@@ -170,7 +152,7 @@ client.on("messageCreate", async function (message) {
 
 		}
 	}
-	//beta
+
 	
 
 
